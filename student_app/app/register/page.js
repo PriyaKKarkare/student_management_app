@@ -1,13 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginPage() {
+export default function RegisterPage() {
 	const router = useRouter();
 
 	const [formData, setFormData] = useState({
+		name: "",
 		email: "",
 		password: "",
 	});
@@ -31,7 +31,7 @@ export default function LoginPage() {
 		setLoading(true);
 
 		try {
-			const response = await fetch("/api/auth/login", {
+			const response = await fetch("/api/auth/register", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -42,19 +42,19 @@ export default function LoginPage() {
 			const data = await response.json();
 
 			if (!response.ok) {
-				setMessage(data.message || "Login failed");
+				setMessage(data.message || "Registration failed");
 				return;
 			}
-			console.log("LOGIN SUCCESS - REDIRECTING");
 
-			setMessage("Login successful!");
+			setMessage("Registration successful!");
 
 			setFormData({
+				name: "",
 				email: "",
 				password: "",
 			});
 
-			router.push("/dashboard");
+			router.push("/login");
 		} catch (error) {
 			setMessage("Something went wrong");
 		} finally {
@@ -64,9 +64,24 @@ export default function LoginPage() {
 
 	return (
 		<div>
-			<h1>Login</h1>
+			<h1>Register</h1>
 
 			<form onSubmit={handleSubmit}>
+				<div>
+					<label>Name</label>
+					<br />
+
+					<input
+						type="text"
+						name="name"
+						value={formData.name}
+						onChange={handleChange}
+						placeholder="Enter your name"
+					/>
+				</div>
+
+				<br />
+
 				<div>
 					<label>Email</label>
 					<br />
@@ -98,16 +113,11 @@ export default function LoginPage() {
 				<br />
 
 				<button type="submit" disabled={loading}>
-					{loading ? "Logging in..." : "Login"}
+					{loading ? "Registering..." : "Register"}
 				</button>
 			</form>
 
 			<p>{message}</p>
-
-			<p>
-				Don't have an account?{" "}
-				<Link href="/register">Register</Link>
-			</p>
 		</div>
 	);
 }

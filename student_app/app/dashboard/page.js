@@ -1,15 +1,35 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
-  return (
-    <div>
-      <h1>Dashboard</h1>
+	const router = useRouter();
 
-      <p>Welcome to Student Dashboard</p>
+	async function handleLogout() {
+		const response = await fetch("/api/auth/logout", {
+			method: "POST",
+		});
 
-      <Link href="/students">
-        View Students
-      </Link>
-    </div>
-  );
+		const data = await response.json();
+
+		if (!response.ok) {
+			alert(data.message || "Logout failed");
+			return;
+		}
+
+		router.push("/login");
+		router.refresh();
+	}
+
+	return (
+		<div>
+			<h1>Dashboard</h1>
+
+			<p>Welcome to Student Management System</p>
+
+			<button onClick={handleLogout}>
+				Logout
+			</button>
+		</div>
+	);
 }
