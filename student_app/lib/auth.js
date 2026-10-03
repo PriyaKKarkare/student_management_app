@@ -9,6 +9,8 @@ export function verifyToken(token) {
 
 		return decoded;
 	} catch (error) {
+		console.error("JWT VERIFY ERROR:", error);
+
 		return null;
 	}
 }
