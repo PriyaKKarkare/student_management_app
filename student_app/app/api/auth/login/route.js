@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { connectDB } from "../../../../lib/db";
 import User from "../../../../models/User";
@@ -29,8 +30,13 @@ export async function POST(request) {
 			);
 		}
 
-		// Check password
-		if (user.password !== password) {
+		// Compare password with hashed password
+		const isPasswordCorrect = await bcrypt.compare(
+			password,
+			user.password
+		);
+
+		if (!isPasswordCorrect) {
 			return NextResponse.json(
 				{ message: "Invalid email or password" },
 				{ status: 401 }
@@ -42,6 +48,7 @@ export async function POST(request) {
 			{
 				userId: user._id.toString(),
 				email: user.email,
+				role: user.role,
 			},
 			process.env.JWT_SECRET,
 			{
