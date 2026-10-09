@@ -2,7 +2,10 @@ import SearchBox from "./SearchBox";
 
 async function getStudents() {
 	const response = await fetch(
-		"http://localhost:3000/api/students"
+		"http://localhost:3000/api/students",
+		{
+			cache: "no-store",
+		}
 	);
 
 	if (!response.ok) {
@@ -15,7 +18,5 @@ async function getStudents() {
 export default async function StudentList() {
 	const students = await getStudents();
 
-	// Empty asla tari SearchBox dakhvaycha - table madhe
-	// "No students added yet." message tithech yeto.
 	return <SearchBox students={students} />;
 }
