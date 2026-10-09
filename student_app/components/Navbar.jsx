@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Navbar() {
 	return (
-		<nav>
+		<nav className="site-nav">
 			<h2>Student Management System</h2>
 
 			<div>

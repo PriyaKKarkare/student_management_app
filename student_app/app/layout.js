@@ -1,15 +1,11 @@
 import "./globals.css";
-import Navbar from "../components/Navbar";
+import AppShell from "../components/AppShell";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-
-        <main>
-          {children}
-        </main>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

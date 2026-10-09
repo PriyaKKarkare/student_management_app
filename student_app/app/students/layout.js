@@ -1,10 +1,5 @@
-export default function RootLayout({ children }) {
-	return (
-		<div>
-			<nav>
-				<h2>Student App</h2>
-			</nav>
-			{children}
-		</div>
-	);
+// Sidebar + topbar ata AppShell (root layout) madhun yeto,
+// mhanun ithe fakt children return karaycha.
+export default function StudentsLayout({ children }) {
+	return children;
 }
